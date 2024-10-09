@@ -105,6 +105,14 @@ function App() {
     })
   }, [totalSupply])
 
+  const scrollToImageItem = (prefix: string, id: number) => {
+    console.log(`${prefix}-${id}`)
+    const element = document.getElementById(`${prefix}-${id}`);
+    if (element) {
+      element.scrollIntoView({ inline: "start", behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="app-container">
       <div className="info-section">
@@ -112,14 +120,47 @@ function App() {
         <div className="queue-info">
           <h3>Queue ({nftInfos.length})</h3>
           <h4>- Base: {queueRarityInfo.base.length}</h4>
-          <h4>- Core: {queueRarityInfo.core.length} [{queueRarityInfo.core.join(", ")}]</h4>
-          <h4>- Epic: {queueRarityInfo.epic.length} [{queueRarityInfo.epic.join(", ")}]</h4>
-          <h4>- Legendary: {queueRarityInfo.legendary.length} [{queueRarityInfo.legendary.join(", ")}]</h4>
+          <h4>
+          - Core: {queueRarityInfo.core.length} [
+            {queueRarityInfo.core.map((id, idx) => (
+              <span key={id}>
+                <a href="#queue" onClick={() => scrollToImageItem("queue", id)}>
+                  {id}
+                </a>
+                {idx < queueRarityInfo.core.length - 1 && ", "}
+              </span>
+            ))}
+            ]
+          </h4>
+          <h4>
+          - Epic: {queueRarityInfo.epic.length} [
+            {queueRarityInfo.epic.map((id, idx) => (
+              <span key={id}>
+                <a href="#queue" onClick={() => scrollToImageItem("queue", id)}>
+                  {id}
+                </a>
+                {idx < queueRarityInfo.epic.length - 1 && ", "}
+              </span>
+            ))}
+            ]
+          </h4>
+          <h4>
+          - Legendary: {queueRarityInfo.legendary.length} [
+            {queueRarityInfo.legendary.map((id, idx) => (
+              <span key={id}>
+                <a href="#queue" onClick={() => scrollToImageItem("queue", id)}>
+                  {id}
+                </a>
+                {idx < queueRarityInfo.legendary.length - 1 && ", "}
+              </span>
+            ))}
+            ]
+          </h4>
         </div>
   
         <div className="image-row">
           {nftInfos.map((nftInfo, index) => (
-            <div key={nftInfo.id} className="image-item">
+            <div key={nftInfo.id} id={`queue-${index + 1}`} className="image-item">
               <p>{index + 1}</p>
               <a target="_blank" href={`https://pallet.exchange/collection/sakeinu/${nftInfo.bigId}`}><p># {nftInfo.id}</p></a>
               {(nftInfo.rarity === "Base") ?
@@ -133,14 +174,47 @@ function App() {
         <div className="remained-info">
           <h3>Unminted ({10000 - totalSupply})</h3>
           <h4>- Base: {unmintedRarityInfo.base.length}</h4>
-          <h4>- Core: {unmintedRarityInfo.core.length} [{unmintedRarityInfo.core.join(", ")}]</h4>
-          <h4>- Epic: {unmintedRarityInfo.epic.length} [{unmintedRarityInfo.epic.join(", ")}]</h4>
-          <h4>- Legendary: {unmintedRarityInfo.legendary.length} [{unmintedRarityInfo.legendary.join(", ")}]</h4>
+          <h4>
+          - Core: {unmintedRarityInfo.core.length} [
+            {unmintedRarityInfo.core.map((id, idx) => (
+              <span key={id}>
+                <a href="#remained-info" onClick={() => scrollToImageItem("remained", id)}>
+                  {id}
+                </a>
+                {idx < unmintedRarityInfo.core.length - 1 && ", "}
+              </span>
+            ))}
+            ]
+          </h4>
+          <h4>
+          - Epic: {unmintedRarityInfo.epic.length} [
+            {unmintedRarityInfo.epic.map((id, idx) => (
+              <span key={id}>
+                <a href="#remained-info" onClick={() => scrollToImageItem("remained", id)}>
+                  {id}
+                </a>
+                {idx < unmintedRarityInfo.epic.length - 1 && ", "}
+              </span>
+            ))}
+            ]
+          </h4>
+          <h4>
+          - Legendary: {unmintedRarityInfo.legendary.length} [
+            {unmintedRarityInfo.legendary.map((id, idx) => (
+              <span key={id}>
+                <a href="#remained-info" onClick={() => scrollToImageItem("remained", id)}>
+                  {id}
+                </a>
+                {idx < unmintedRarityInfo.legendary.length - 1 && ", "}
+              </span>
+            ))}
+          ]            
+          </h4>
         </div>
   
         <div className="image-row">
           {unmintedInfos.map((nftInfo, index) => (
-            <div key={nftInfo.id} className="image-item">
+            <div key={nftInfo.id} id={`remained-${index + 1}`} className="image-item">
               <p>{index + 1}</p>
               <a target="_blank" href={`https://pallet.exchange/collection/sakeinu/${nftInfo.bigId}`}><p># {nftInfo.id}</p></a>
               {(nftInfo.rarity === "Base") ?
